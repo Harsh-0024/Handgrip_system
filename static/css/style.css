@@ -1,11 +1,110 @@
+:root {
+  --bs-body-bg: #212529;
+  --bs-body-color: #f8f9fa;
+  --bs-secondary-color: #adb5bd;
+}
+
+.the_main_button {
+  margin: 10px; /* Adds spacing around the buttons */
+}
+
+.personal_links {
+  fill: red;
+  width: 40px;
+  height: 40px;
+}
+
+.icon {
+  font-size: 24px; /* Default size for desktops */
+}
+
+@media (max-width: 768px) {
+  .icon {
+    font-size: 36px; /* Larger size for mobile screens */
+  }
+
+  footer ul.list-unstyled li {
+    display: inline-block;
+  }
+
+  footer ul.list-unstyled {
+    display: flex;
+    justify-content: center;
+  }
+}
+
+/* Footer styling to reduce space */
+footer {
+  margin-top: 54px; /* Pulls the footer closer */
+  padding-top: 10px;
+}
+
+/* Button container adjustments */
+button {
+  margin-bottom: 5px;
+}
+
+/* Section above footer adjustments */
+.section-above-footer {
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+/* Body to avoid excessive padding issues */
 body {
-    background-color: #f8f9fa;
+  padding: 0;
+  margin: 0;
+}
+.this_is_timer {
+font-family: sans-serif;
+display: flex;
+justify-content: center;
+align-items: center;
+height: 64vh;
+margin: 0;
+}
+.base-timer {
+  position: relative;
+  width: 300px;
+  height: 300px;
 }
 
-h1 {
-    color: #343a40;
+.base-timer__circle {
+  fill: none;
+  stroke: none;
 }
 
-p {
-    font-size: 1.2rem;
+.base-timer__path-elapsed {
+  stroke-width: 7px;
+  stroke: grey;
+}
+
+.base-timer__path-remaining {
+  stroke-width: 7px;
+  stroke-linecap: round;
+  transform: rotate(90deg);
+  transform-origin: center;
+  transition: 1s linear all;
+  stroke: gold;
+}
+
+.base-timer__label {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+}
+
+.the_main_block {
+  transition: background-color 0.5s ease-in-out;
+}
+.hold-phase {
+  background-color: red !important;
+}
+.rest-phase {
+  background-color: #212529 !important;
 }
