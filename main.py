@@ -3,7 +3,7 @@ import time
 
 app = Flask(__name__)
 
-power_strength = [[12, 1], [11, 1], [10, 3], [9, 5], [8, 7], [7, 9], [6, 11]]
+power_strength = [[12, 1,], [11, 1], [10, 3], [9, 5], [8, 7], [7, 9], [6, 11]]
 endurance_isometric = [[3, 64], [5, 54], [7, 45], [9, 36], [11, 24]]
 
 
@@ -17,9 +17,11 @@ def program():
     mode = request.args.get('mode')
     if mode == 'power':
         return_list = power_strength
+        rest = 3
     else:
         return_list = endurance_isometric
-    return render_template('program_detail.html', list=return_list)
+        rest = 5
+    return render_template('program_detail.html', list=return_list, rest=rest)
 
 
 @app.route('/workout')

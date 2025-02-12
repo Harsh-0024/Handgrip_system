@@ -6,7 +6,7 @@
   <div class="the_main_block col-lg-6 col-xxl-4 my-5 mx-auto p-3 text-bg-dark">
     <div class="d-grid gap-2">
       {% for a, b in list %}
-        <button type="button" onclick="location.href='{{ url_for('workout', reps=a, time=b, rest=4) }}'"
+        <button type="button" onclick="location.href='{{ url_for('workout', reps=a, time=b, rest=rest) }}'"
                 class="the_main_button btn btn-warning p-2">{{ a }} reps
         </button>
       {% endfor %}
