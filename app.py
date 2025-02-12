@@ -1,6 +1,4 @@
 from flask import Flask, request, render_template
-import time
-
 app = Flask(__name__)
 
 power_strength = [[12, 1,], [11, 1], [10, 3], [9, 5], [8, 7], [7, 9], [6, 11]]
