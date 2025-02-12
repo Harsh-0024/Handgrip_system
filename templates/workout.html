@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% block title %}Home - Handgrip System{% endblock %}
+
+{% block content %}
+<div class="this_is_timer">
+    <div class="the_main_block col-lg-6 col-xxl-4 my-0 mx-auto p-0 text-bg-dark">
+    <div class="d-grid gap-2">
+      <div id="app"></div>
+      <script>
+        // Variables from Flask
+        const HOLD_TIME = {{ hold }};
+        const REST_TIME = {{ rest }};
+        const TOTAL_CYCLES = {{ count }};
+        const FULL_DASH_ARRAY = 283;
+
+        let cycleCount = 0;
+        let timeLeft = HOLD_TIME;
+        let isHoldPhase = true;
+        let timerInterval;
+
+        document.getElementById("app").innerHTML = `
+        <div class="base-timer">
+          <svg class="base-timer__svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <g class="base-timer__circle">
+              <circle class="base-timer__path-elapsed" cx="50" cy="50" r="45"></circle>
+              <path
+                id="base-timer-path-remaining"
+                stroke-dasharray="283"
+                class="base-timer__path-remaining"
+                d="
+                  M 50, 50
+                  m -45, 0
+                  a 45,45 0 1,0 90,0
+                  a 45,45 0 1,0 -90,0
+                "
+              ></path>
+            </g>
+          </svg>
+          <span id="base-timer-label" class="base-timer__label">${formatTime(timeLeft)}</span>
+        </div>
+        `;
+
+        startTimer();
+
+        function startTimer() {
+          timerInterval = setInterval(() => {
+            timeLeft -= 1;
+            document.getElementById("base-timer-label").innerHTML = formatTime(timeLeft);
+            setCircleDasharray();
+
+            if (timeLeft === 0) {
+              switchPhase();
+            }
+          }, 1000);
+        }
+
+        function switchPhase() {
+          clearInterval(timerInterval);
+          cycleCount += isHoldPhase ? 0 : 1;
+
+          if (cycleCount < TOTAL_CYCLES) {
+            isHoldPhase = !isHoldPhase;
+            timeLeft = isHoldPhase ? HOLD_TIME : REST_TIME;
+
+            // Get the element and update class
+            let mainBlock = document.querySelector(".the_main_block");
+            if (isHoldPhase) {
+              mainBlock.classList.add("hold-phase");
+              mainBlock.classList.remove("rest-phase");
+            } else {
+              mainBlock.classList.add("rest-phase");
+              mainBlock.classList.remove("hold-phase");
+            }
+
+            startTimer();
+          } else {
+            document.getElementById("base-timer-label").innerHTML = "Done!";
+          }
+        }
+
+
+
+        function formatTime(time) {
+          const minutes = Math.floor(time / 60);
+          let seconds = time % 60;
+          if (seconds < 10) {
+            seconds = `0${seconds}`;
+          }
+          return `${minutes}:${seconds}`;
+        }
+
+        function calculateTimeFraction() {
+          const rawTimeFraction = timeLeft / (isHoldPhase ? HOLD_TIME : REST_TIME);
+          return rawTimeFraction - (1 / (isHoldPhase ? HOLD_TIME : REST_TIME)) * (1 - rawTimeFraction);
+        }
+
+        function setCircleDasharray() {
+          const circleDasharray = `${(calculateTimeFraction() * FULL_DASH_ARRAY).toFixed(0)} 283`;
+          document.getElementById("base-timer-path-remaining").setAttribute("stroke-dasharray", circleDasharray);
+        }
+      </script>
+    </div>
+</div>
+</div>
+
+{% endblock %}
+
