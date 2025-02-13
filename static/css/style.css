@@ -33,12 +33,6 @@
   }
 }
 
-/* Footer styling to reduce space */
-footer {
-  margin-top: 114px; /* Pulls the footer closer */
-  padding-top: 10px;
-}
-
 /* Button container adjustments */
 button {
   margin-bottom: 5px;
