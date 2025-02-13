@@ -27,7 +27,7 @@ def workout():
     timex = request.args.get('time')
     reps = request.args.get('reps')
     rest = request.args.get('rest')
-    return render_template('workout.html', hold=timex, rest=rest, count=reps)
+    return render_template('workout.html', hold=timex, rest=rest, count=reps*2)
 
 
 if __name__ == '__main__':
