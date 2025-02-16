@@ -75,10 +75,11 @@
             startTimer();
           } else {
             document.getElementById("base-timer-label").innerHTML = "Done!";
+            setTimeout(() => {
+              window.location.href = "/program_details.html";  // Redirect after 2 seconds
+            }, 2000);
           }
         }
-
-
 
         function formatTime(time) {
           const minutes = Math.floor(time / 60);
