@@ -18,20 +18,22 @@ def index():
 
 @app.route('/program_detail')
 def program():
+    message = request.args.get('message')
+    print(message, type(message))
     mode = request.args.get('mode')
     if mode == 'power':
         return_list = power_strength
     else:
         return_list = endurance_isometric
-    return render_template('program_detail.html', list=return_list, mode=mode)
+    return render_template('program_detail.html', list=return_list, mode=mode, message=message)
 
 
 @app.route('/workout')
 def workout():
-    timex = request.args.get('time')
-    rest = request.args.get('rest')
+    timex = int(request.args.get('time'))
+    rest = int(request.args.get('rest'))
     modex = request.args.get('mode')
-    reps = request.args.get('reps') if modex == 'power' else int(request.args.get('reps'))*2
+    reps = int(request.args.get('reps')) if modex == 'power' else int(request.args.get('reps'))*2
     return render_template('workout.html', hold=timex, rest=rest, count=reps, mode=modex)
 
 
