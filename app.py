@@ -1,8 +1,14 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, send_from_directory
+
 app = Flask(__name__)
 
 power_strength = [[12, 1, 3], [11, 1, 3], [10, 3, 3], [9, 5, 3], [8, 7, 5], [7, 9, 5], [6, 11, 5]]
 endurance_isometric = [[3, 64, 3], [5, 54, 3], [7, 45, 3], [9, 36, 3], [11, 24, 3]]
+
+
+@app.route('/static/<path:filename>')
+def static_files(filename):
+    return send_from_directory('static', filename)
 
 
 @app.route('/')
