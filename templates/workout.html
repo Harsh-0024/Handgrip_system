@@ -109,7 +109,7 @@
           } else {
             document.getElementById("base-timer-label").innerHTML = "Done!";
             setTimeout(() => {
-              window.location.href = '{{ url_for("program", mode=mode, message=(hold|int + rest|int) * (count|int))|safe }}';
+              window.location.href = '{{ url_for("program", mode=mode, message=time_invested)|safe }}';
             }, 1000);
           }
         }
