@@ -6,7 +6,7 @@
   <div class="the_main_block col-lg-6 col-xxl-4 my-5 mx-auto p-3 text-bg-dark">
     <div class="d-grid gap-2">
       {% if message is not none %}
-        <div align="center">Time = {{ (message|int)|round(0) }} minutes</div>
+        <div align="center">Time = {{ ((message|int)/60)|round(0) }} minutes</div>
       {% endif %}
       {% for a, b, c in list %}
         <button type="button" onclick="location.href='{{ url_for('workout', reps=a, time=b, rest=c, mode=mode) }}'"
