@@ -21,6 +21,22 @@
         // Create an Audio object for the beep sound.
         // Make sure beep.mp3 exists in your static folder.
         const beepSound = new Audio("{{ url_for('static', filename='assets/beep.mp3') }}");
+        function unlockAudio() {
+          beepSound.play().then(() => {
+            beepSound.pause();
+            console.log('Audio unlocked');
+          }).catch(err => {
+            console.log('Error unlocking audio:', err);
+          });
+          // Remove this event listener once audio is unlocked.
+          document.removeEventListener('click', unlockAudio);
+          document.removeEventListener('touchstart', unlockAudio);
+        }
+
+        // Listen for a click or touch event to unlock audio.
+        document.addEventListener('click', unlockAudio);
+        document.addEventListener('touchstart', unlockAudio);
+
 
         document.getElementById("app").innerHTML = `
           <div class="base-timer">
