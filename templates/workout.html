@@ -20,7 +20,7 @@
 
         // Create an Audio object for the beep sound.
         // Make sure beep.mp3 exists in your static folder.
-        const beepSound = new Audio("{{ url_for('static', filename='beep.mp3') }}");
+        const beepSound = new Audio("{{ url_for('static', filename='assets/beep.mp3') }}");
 
         document.getElementById("app").innerHTML = `
           <div class="base-timer">
