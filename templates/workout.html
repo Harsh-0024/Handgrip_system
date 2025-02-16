@@ -76,8 +76,8 @@
           } else {
             document.getElementById("base-timer-label").innerHTML = "Done!";
             setTimeout(() => {
-              window.location.href = "/program_details.html";  // Redirect after 2 seconds
-            }, 2000);
+              window.location.href = '{{ url_for('program', mode=mode) }}'
+            }, 1000);
           }
         }
 
