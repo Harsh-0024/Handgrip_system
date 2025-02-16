@@ -18,26 +18,26 @@
         let isHoldPhase = true;
         let timerInterval;
 
-        // Create an Audio object for the beep sound.
-        // Make sure beep.mp3 exists in your static folder.
-        const beepSound = new Audio("{{ url_for('static', filename='assets/beep.mp3') }}");
+        // Create two Audio objects for the beep sounds
+        const beepSoundHold = new Audio("{{ url_for('static', filename='assets/beepHold.mp3') }}");
+        const beepSoundRest = new Audio("{{ url_for('static', filename='assets/beepRest.mp3') }}");
+
+        // Audio Unlocker for Mobile/Safari
         function unlockAudio() {
-          beepSound.play().then(() => {
-            beepSound.pause();
-            console.log('Audio unlocked');
-          }).catch(err => {
-            console.log('Error unlocking audio:', err);
-          });
-          // Remove this event listener once audio is unlocked.
+          // Try playing then pausing each sound to unlock
+          beepSoundHold.play().then(() => beepSoundHold.pause()).catch(() => {});
+          beepSoundRest.play().then(() => beepSoundRest.pause()).catch(() => {});
+
+          // Remove listeners after first user interaction
           document.removeEventListener('click', unlockAudio);
           document.removeEventListener('touchstart', unlockAudio);
         }
 
-        // Listen for a click or touch event to unlock audio.
+        // Listen for a click or touch event to unlock audio
         document.addEventListener('click', unlockAudio);
         document.addEventListener('touchstart', unlockAudio);
 
-
+        // Inject Timer HTML
         document.getElementById("app").innerHTML = `
           <div class="base-timer">
             <svg class="base-timer__svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
@@ -60,6 +60,7 @@
           </div>
         `;
 
+        // Start the initial timer (Hold phase first)
         startTimer();
 
         function startTimer() {
@@ -77,18 +78,24 @@
         function switchPhase() {
           clearInterval(timerInterval);
 
-          // Play the beep sound at the start of the new phase.
-          beepSound.play();
-
-          // If it was the rest phase, increment the cycle count.
+          // If we just finished a Rest phase, increment the cycle count
           cycleCount += isHoldPhase ? 0 : 1;
 
           if (cycleCount < TOTAL_CYCLES) {
-            // Toggle phase: if currently hold, switch to rest; else, switch to hold.
+            // Toggle the phase
             isHoldPhase = !isHoldPhase;
+
+            // Play the appropriate beep for the new phase
+            if (isHoldPhase) {
+              beepSoundHold.play();
+            } else {
+              beepSoundRest.play();
+            }
+
+            // Update timeLeft for the new phase
             timeLeft = isHoldPhase ? HOLD_TIME : REST_TIME;
 
-            // Update visual classes for the main block (optional styling).
+            // Optional styling changes
             let mainBlock = document.querySelector(".the_main_block");
             if (isHoldPhase) {
               mainBlock.classList.add("hold-phase");
