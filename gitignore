@@ -3,6 +3,8 @@ __pycache__/
 *.pyc
 .idea/
 
+exp.py
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -10,6 +12,8 @@ __pycache__/
 
 # C extensions
 *.so
+
+*.xlsx
 
 # Distribution / packaging
 .Python
